@@ -26,6 +26,7 @@ import br.edu.uepb.coffee.dtos.CoffeeDTO;
 import br.edu.uepb.coffee.dtos.CoffeeWithDiscountDTO;
 import br.edu.uepb.coffee.dtos.GenericResponseErrorDTO;
 import br.edu.uepb.coffee.exceptions.ExistingCoffeeSameNameException;
+import br.edu.uepb.coffee.mapper.CoffeeMapper;
 import br.edu.uepb.coffee.models.Coffee;
 
 import br.edu.uepb.coffee.services.CoffeeService;
@@ -36,6 +37,8 @@ import io.swagger.v3.oas.annotations.Operation;
 @RequestMapping(value ="/coffees", produces = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
 public class CofeeController {
   
+    @Autowired
+    private CoffeeMapper coffeeMapper;
 
     @Autowired
     private CoffeeService coffeeService;
