@@ -1,15 +1,16 @@
 package br.edu.uepb.coffee.mapper;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import br.edu.uepb.coffee.dtos.CoffeeDTO;
 import br.edu.uepb.coffee.dtos.CoffeeWithDiscountDTO;
 import br.edu.uepb.coffee.models.Coffee;
 
+@Component
 public class CoffeeMapper {
-    @Autowired
-    ModelMapper modelMapper;
+    
+    private ModelMapper modelMapper = new ModelMapper();
 
     public CoffeeDTO convertToCoffeeDTO(Coffee coffee){
         CoffeeDTO coffeeDTO = modelMapper.map(coffee, CoffeeDTO.class);

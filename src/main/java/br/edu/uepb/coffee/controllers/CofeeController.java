@@ -2,10 +2,6 @@ package br.edu.uepb.coffee.controllers;
 
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import javax.naming.NameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -47,9 +43,7 @@ public class CofeeController {
     @Operation(summary = "Busca a lista de todos os coffee")
     public ResponseEntity<?> getCoffees() {
         List<Coffee> coffees = coffeeService.listAllCoffees();
-        return ResponseEntity.ok().body(coffees.stream().
-        map(coffeeMapper::convertToCoffeeDTO)
-        .collect(Collectors.toList()));
+        return ResponseEntity.ok().body(coffees);
     }
     
     @GetMapping("/{id}")
@@ -87,13 +81,13 @@ public class CofeeController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value = "Atualiza um coffee a partir do seu identificador")
+    @Operation(summary = "Atualiza um coffee a partir do seu identificador")
     public CoffeeDTO updateCoffee(@PathVariable("id") Long id, @RequestBody Coffee coffee) {
         return coffeeMapper.convertToCoffeeDTO(coffeeService.updateCoffee(id, coffee));
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Deleta um coffee a apartir do seu identificador")
+    @Operation(summary = "Deleta um coffee a apartir do seu identificador")
     public void deleteCoffee(@PathVariable Long id) {
         coffeeService.deleteCoffee(id);
     }
