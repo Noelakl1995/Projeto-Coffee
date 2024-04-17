@@ -47,7 +47,9 @@ public class CofeeController {
     @Operation(summary = "Busca a lista de todos os coffee")
     public ResponseEntity<?> getCoffees() {
         List<Coffee> coffees = coffeeService.listAllCoffees();
-        return ResponseEntity.ok().body(coffees);
+        return ResponseEntity.ok().body(coffees.stream().
+        map(coffeeMapper::convertToCoffeeDTO)
+        .collect(Collectors.toList()));
     }
     
     @GetMapping("/{id}")
