@@ -26,39 +26,31 @@ import br.edu.uepb.coffee.dtos.CoffeeDTO;
 import br.edu.uepb.coffee.dtos.CoffeeWithDiscountDTO;
 import br.edu.uepb.coffee.dtos.GenericResponseErrorDTO;
 import br.edu.uepb.coffee.exceptions.ExistingCoffeeSameNameException;
-import br.edu.uepb.coffee.mapper.CoffeeMapper;
 import br.edu.uepb.coffee.models.Coffee;
 
 import br.edu.uepb.coffee.services.CoffeeService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 
 
 @RestController
 @RequestMapping(value ="/coffees", produces = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
-@Api(value = "/coffee")
 public class CofeeController {
   
-
-    @Autowired
-    private CoffeeMapper coffeeMapper;
 
     @Autowired
     private CoffeeService coffeeService;
 
     @GetMapping
-    @ApiOperation(value = "Busca a lista de todos os coffee")
-    public List<CoffeeDTO> getCoffees() {
+    @Operation(summary = "Busca a lista de todos os coffee")
+    public ResponseEntity<?> getCoffees() {
         List<Coffee> coffees = coffeeService.listAllCoffees();
-        return coffees.stream().
-        map(coffeeMapper::convertToCoffeeDTO)
-        .collect(Collectors.toList());
+        return ResponseEntity.ok().body(coffees);
     }
     
     @GetMapping("/{id}")
     public ResponseEntity<?> getCoffeeById(@PathVariable Long id) {
         try {
-            return new ResponseEntity<>(coffeeMapper.convertToCoffeeDTO(coffeeService.findById(id)), HttpStatus.OK);
+            return ResponseEntity.ok().body(coffeeService.findById(id));
         } catch (NotFoundException e) {
             return ResponseEntity.badRequest().body(new GenericResponseErrorDTO(e.getMessage()));
         }
