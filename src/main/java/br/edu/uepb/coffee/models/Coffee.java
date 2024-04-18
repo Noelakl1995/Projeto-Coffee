@@ -21,21 +21,14 @@ public class Coffee {
     @GeneratedValue(strategy= GenerationType.AUTO )
     private Long id;
 
+    @Column(name = "price")
+    private double price;
+
     @Column(name = "name")
     private String name;
 
     public Coffee(String name){
         this.name = name;
 
-    }
-
-    public double getPrice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPrice'");
-    }
-
-    public void setPrice(double d) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setPrice'");
     }
 }

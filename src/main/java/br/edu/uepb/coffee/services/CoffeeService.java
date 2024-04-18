@@ -16,7 +16,7 @@ import br.edu.uepb.coffee.repositories.CoffeeRepository;
 public class CoffeeService {
     
     @Autowired
-    private static CoffeeRepository coffeeRepository;
+    private CoffeeRepository coffeeRepository;
 
     public Coffee updateDiscountCoffee(Coffee coffee, double discount) throws NotFoundException {
         if (!coffeeRepository.findByName(coffee.getName()).isPresent())
