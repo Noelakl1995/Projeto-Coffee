@@ -1,13 +1,13 @@
 package br.edu.uepb.coffee.services;
 
 import java.util.List;
-
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.edu.uepb.coffee.exceptions.CoffeeNotFoundException;
 import br.edu.uepb.coffee.exceptions.ExistingCoffeeSameNameException;
 import br.edu.uepb.coffee.models.Coffee;
 import br.edu.uepb.coffee.repositories.CoffeeRepository;
@@ -35,6 +35,12 @@ public class CoffeeService {
             throw new ExistingCoffeeSameNameException("Já existe um café com esse nome!");
         return coffeeRepository.save(coffee);
     }
+
+    public Coffee findByName(String name) throws CoffeeNotFoundException {
+        Optional<Coffee> optionalCoffee = coffeeRepository.findByName(name);
+        return optionalCoffee.orElseThrow(() -> new CoffeeNotFoundException(name));
+    }
+    
 
     public Coffee updateCoffee(Long id, Coffee coffee) {
         coffee.setId(id);
